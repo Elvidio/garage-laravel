@@ -33,4 +33,6 @@ class UserController extends Controller
 
         return view('users.reservations', ['reservations' => $reservations]);
     }
+
+
 }

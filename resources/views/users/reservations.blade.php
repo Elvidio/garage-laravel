@@ -26,7 +26,7 @@
                             <td> {{ $reservation->pivot->ended_at }} </td>
                             <td>
                                 @if ($reservation->pivot->ended_at > now())
-                                    <button class="btn btn-sm btn-primary">Prolonger</button>
+                                    <a href="{{ route('vehicles.prolonger', $reservation) }}" class="btn btn-sm btn-primary">Prolonger</a>
                                 @endif
                             </td>
                         </tr>

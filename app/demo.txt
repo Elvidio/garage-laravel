@@ -1,0 +1,14 @@
+Créer une route :
+- récupération d'une information :   Route::get('/chemin', [NomduController::class, 'nom de la fonction'])->name('vehicles."nom du blade"');
+- envoyer une information (formulaire) :   Route::post('/chemin', [NomduController::class, 'nom de la fonction'])->name('vehicles."nom du blade"');
+- récupérer la donnée d'une route : rajouter la donnée entre {} dans le chemin de la route.
+
+
+Récupérer une information :
+
+Rajouter la donnée de la route en paramètre dans la fonction du controller.
+exemple : public function prolonger(Request $request, "$id")
+
+Réutiliser la donnée :
+    récupérer une valeur envoyée par le formulaire: $request->get();
+    récuperer le véhicule grâce à son id :  $vehicle = Vehicle::findOrFail($id);

@@ -9,6 +9,12 @@
                        <a class="btn btn-primary" href="{{ route('vehicles.create') }}">Ajouter un véhicule</a>
                    @endcan
                </div>
+               <div class="mb-5">
+                       <a class="btn btn-primary" href="{{ route('vehicles.booking') }}">Demande de devis</a>
+               </div>
+               <div class="mb-5">
+                       <a class="btn btn-primary" href="{{ route('announcement.list') }}">Voir les annonces</a>
+               </div>
            </div>
        </div>
        <div class="row">

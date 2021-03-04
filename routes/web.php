@@ -4,6 +4,7 @@ use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\AnnouncementController;
 use \App\Http\Controllers\Admin;
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'vehicles'], function () {
         Route::get('/{id}/reserved', [VehicleController::class, 'reserved'])->name('vehicles.reserved');
         Route::post('/{vehicle}/reserved', [VehicleController::class, 'storeReserved'])->name('vehicules.reserved.store');
+        Route::get('/prolonger/{id}', [VehicleController::class, 'prolonger'])->name('vehicles.prolonger');
+    });
+
+    Route::group(['prefix' => 'booking'], function () {
+        Route::get('/', [VehicleController::class, 'booking'])->name('vehicles.booking');
+        Route::post('/prixtcc', [VehicleController::class, 'calcul'])->name('vehicles.calcul');
+    });
+
+    Route::group(['prefix' => 'announcements'], function() {
+        Route::get('/add', [AnnouncementController::class, 'add'])->name('announcement.add');
+        Route::post('/', [AnnouncementController::class, 'store'])->name('announcement.store');
+        Route::get('/', [AnnouncementController::class, 'list'])->name('announcement.list');
+        Route::get('/edit', [AnnouncementController::class, 'edit'])->name('announcement.edit');
+        Route::post('/edit/{id}', [AnnouncementController::class, 'edited'])->name('announcement.edited');
+        Route::get('/delete', [AnnouncementController::class, 'delete'])->name('announcement.delete');
     });
 });
 

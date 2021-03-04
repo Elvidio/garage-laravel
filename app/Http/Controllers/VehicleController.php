@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Vehicle;
 use App\Services\CannotReservedVehicleLockedException;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Services\VehicleService;
 use Illuminate\Support\Facades\Auth;
@@ -76,4 +77,41 @@ class VehicleController extends Controller
             return back()->withErrors(['error' => 'Le véhicule ne peut pas être reservé pendant cette période']);
         }
     }
+
+    public function booking()
+    {
+        $vehicles = Vehicle::all();
+
+        return view('vehicles.booking', ['vehicles' => $vehicles]);
+    }
+
+    public function calcul(Request $request)
+    {
+
+        $vehicle = Vehicle::findOrFail($request->get('vehicle_id'));
+        $started = $request->get('starting_at');
+        $ended= $request->get('ending_at');
+
+        $startingAt = Carbon::parse($started);
+
+        $days = $startingAt->diffInDays($ended);
+
+        $prixHT = ($days + 1) * $vehicle->price;
+
+        $prixTTC = $prixHT * 1.2;
+
+        return view('vehicles.devis', ['vehicle' => $vehicle, 'prixTTC' => $prixTTC, 'prixHT' => $prixHT, 'started' => $started, 'ended' => $ended, 'days' => $days]);
+
+    }
+
+    public function prolonger(Request $request, $id)
+    {
+        $vehicle= Vehicle::findOrFail($id);
+        $end = $vehicle->update([
+            'ending_at'
+        ]);
+
+        return view ('vehicles.prolonger', [ 'end' => $end, 'id' => $id]);
+    }
+
 }
